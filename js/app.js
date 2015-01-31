@@ -17,7 +17,7 @@ $(document).ready(function(){
 });
 
 //Generate random number
-var x = Math.floor((Math.random() * 101) + 1);
+var x = Math.floor((Math.random() * 100) + 1);
 function randomNumber(){
 	console.log("random number: " + x);
 }
@@ -27,7 +27,9 @@ function thisGame(){
 	$(".button").click(function(e){
 		e.preventDefault();
 		var guess =  $('#userGuess').val();
-			guess =  Number(guess);
+		guess =  Number(guess);
+		var diff = Math.abs(x - guess);
+		//var g = guess++
 
 			//Check if guess is a string
 			if (guess != Number(guess)) {
@@ -47,24 +49,22 @@ function thisGame(){
 				$("#guessList").append('<li>' + ($("#userGuess").val()) + '</li>');
 
 				//Hot or cold prompts
-				if (guess == x){
+				if (diff === 0){
 					$("h2#feedback").text("Correct!");
-				}
-				if (guess > x + 50 || guess < x + 50 ){ 
-					$("h2#feedback").text("Ice Cold"); 
-					$('#userGuess').val('');
-				}
-				if (guess > x + 49 || guess < x + 49 || guess > x + 30 || guess < x + 30 ){ 
-					$("h2#feedback").text("Cold"); 
-					$('#userGuess').val('');
-				}
-				if (guess > x + 29 || guess < x + 29 || guess > x + 10 || guess < x + 10 ){ 
-					$("h2#feedback").text("Warm"); 
-				}
-				if (guess > x + 9 || guess < x + 9 || guess > x + 1 || guess < x + 1 ){ 
-					$("h2#feedback").text("Hot");
 				} 
-
+				else if (diff >= 1  && diff <= 10){
+					$("h2#feedback").text("Hot");
+				}
+				else if (diff >=11 && diff <= 30){
+					$("h2#feedback").text("Warm");
+				}
+				else if (diff >=31 && diff <= 50){
+					$("h2#feedback").text("Warm");
+				}
+				else{
+					$("h2#feedback").text("Ice Cold");
+				}
+				
 				//Count number of attempts
 				$('#count').html(function(i, val){ 
 					return val*1+1 
