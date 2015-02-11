@@ -24,10 +24,11 @@ function randomNumber(){
 }
 
 //Previous guess value
-var pGuess = $('#userGuess').val();
+var guess =  $('#userGuess').val();
+var pGuess = guess;
 function prevGuess(){
-	console.log("prevGuess is: " + pGuess);
-}
+	console.log("prevGuess is: " + pGuess);	
+}//prevGuess
 
 //Current game
 function thisGame(){
@@ -86,12 +87,14 @@ function thisGame(){
 			}//end of prompts for first guess
 			
 			$('#userGuess').val(''); //clear input field
-			
-			prevGuess = guess;
+
+			pGuess = guess;
 			
 		}
 	})//click function
 }//function thisGame()
+
+
 
 //Refresh page; start new game
 function newGame(){
