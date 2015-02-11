@@ -2,8 +2,8 @@
 $(document).ready(function(){
 	randomNumber();
 	thisGame();
+	prevGuess();
 	newGame();
-
 
 	
 	/*--- Display information modal box ---*/
@@ -23,6 +23,11 @@ function randomNumber(){
 	console.log("random number: " + x);
 }
 
+//Previous guess value
+var pGuess = $('#userGuess').val();
+function prevGuess(){
+	console.log("prevGuess is: " + pGuess);
+}
 
 //Current game
 function thisGame(){
@@ -31,10 +36,11 @@ function thisGame(){
 		var guess =  $('#userGuess').val();
 		guess =  Number(guess);
 		var diff = Math.abs(x - guess);
+		var count = $('#count').return;
 
 		//Check if guess is a string
 		if (guess != Number(guess)) {
-			alert("You only enter numbers. Try again");
+			alert("You can only enter numbers. Try again");
 			$('#userGuess').val(''); //clear input field
 		}
 
@@ -44,13 +50,23 @@ function thisGame(){
 			$('#userGuess').val(''); //clear input field
 		}
 		else{
-			console.log(guess);
-			
 			//Add guess to list
 			$("#guessList").append('<li>' + ($("#userGuess").val()) + '</li>');
 
+			//Count number of attempts
+			$('#count').html(function(i, val){ 
+				return val*1+1	
+			});
+			
+			console.log(guess);
+
+			
 			//Hot or cold prompts
-			if (diff === 0){
+
+			if ($('#count') > 1){
+				console.log("button clicked twice");
+			}
+			else if (diff === 0){
 				$("h2#feedback").text("Bingo!");
 			} 
 			else if (diff >= 1  && diff <= 5){
@@ -63,20 +79,18 @@ function thisGame(){
 				$("h2#feedback").text("Luke Warm");
 			}
 			else if (diff >= 31 && diff <= 50){
-				$("h2#feedback").text("Warm");
+				$("h2#feedback").text("Cold");
 			}
 			else{
 				$("h2#feedback").text("Ice Cold");
 			}//end of prompts for first guess
 			
-			//Count number of attempts
-			$('#count').html(function(i, val){ 
-				return val*1+1 
-			});
-
 			$('#userGuess').val(''); //clear input field
+			
+			prevGuess = guess;
+			
 		}
-	})//.click
+	})//click function
 }//function thisGame()
 
 //Refresh page; start new game
